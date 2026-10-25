@@ -51,7 +51,8 @@ a factory reset costs you ~2 minutes of re-setup, not a re-flash.
 
 ## What's in the Releases
 
-- `los-custom-v7.img` — the system image (split archives, see guide)
+- `los-custom-v7.1.7z` — the system image (v7.1: Facebook Lite audio fix,
+  confirmed on device — unzip and verify against SHA256SUMS)
 - `vendor-custom.img` — the fixed vendor image
 - `boot-magisk.img` — the Magisk-patched boot image
 - `SHA256SUMS.txt` — verify everything before flashing
