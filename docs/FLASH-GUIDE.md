@@ -237,4 +237,6 @@ Done. Install your apps (Open Camera, your launcher, your games) and go.
 | Magisk scripts run but state wrong / labels odd | SELinux label drift on /data/adb | `adb shell "chcon -R u:object_r:adb_data_file:s0 /data/adb"` then reboot |
 | `adb root` says "disabled by system setting" | Root debugging toggle flipped off | Settings → Developer options → re-enable Root debugging |
 | Instagram/Facebook video silent | Decoder not engaged | Check Phase 11's xaac string test; ensure you flashed the release's system image |
+| Battery temperature reads 0° in apps | Stock MTK battery driver exposes only the non-standard `batt_temp` sysfs node; healthd reads `temp`, which never exists | Sensor is fine — check a thermal-zone app meanwhile. Fixed permanently in our custom kernel build (adds the standard `temp` node) |
+| Some Play-protected app (e.g. Claude) refuses login: "not from Play Store" | Play Integrity on an uncertified GSI fingerprint | Get your fingerprint: `adb shell getprop ro.build.fingerprint` → register it at https://www.google.com/android/uncertified/ → wait up to a few hours → reboot → retry |
 | Want stock back | — | Phase 0 backups: `python mtk.py w system your-system-backup.bin` (+ vendor + boot) |

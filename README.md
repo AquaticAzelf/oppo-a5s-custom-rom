@@ -38,10 +38,17 @@ a factory reset costs you ~2 minutes of re-setup, not a re-flash.
 ## What does NOT work (accepted hardware/firmware limits)
 
 - Fingerprint & face unlock (vendor trustlet) — dead on any GSI
-- Battery temperature in the OS UI (MTK `batt_temp` naming) — use a
-  thermal-zone app; hardware is fine
-- No Vulkan driver exists for this device (verified vendor tree)
-- Android 11+ via GSI: possible (see project notes) but not part of this release
+- Battery temperature shows 0° with the stock-based boot image (the MTK
+  battery driver only exposes the non-standard `batt_temp` node, which
+  healthd never reads). The sensor and thermal zones work fine — use any
+  thermal app, or see [docs/FLASH-GUIDE.md](docs/FLASH-GUIDE.md) →
+  Troubleshooting for the kernel fix that lands in our custom kernel build
+- Vulkan: the stock vendor ships no GPU userspace, so it is not in this
+  release — our Android 11 + Vulkan kernel/vendor rebuild (work in
+  progress) adds a PowerVR 1.13 stack for this exact device
+- Sideloading some Play-Protected apps (e.g. Claude) may refuse login on
+  uncertified devices — register your build fingerprint once at
+  google.com/android/uncertified (see Troubleshooting)
 
 ## What's in the Releases
 
