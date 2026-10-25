@@ -235,6 +235,7 @@ Done. Install your apps (Open Camera, your launcher, your games) and go.
 | mtkclient hangs and won't die | Zombie process holding USB | **Unplug the cable** — the stuck process loses its handle and dies; kill leftover `python.exe` in Task Manager, restart the command |
 | Magisk log: `Magisk environment incomplete` | Environment empty after Format Data | Magisk app → **Install → Direct Install** → reboot (Phase 9) |
 | Magisk scripts run but state wrong / labels odd | SELinux label drift on /data/adb | `adb shell "chcon -R u:object_r:adb_data_file:s0 /data/adb"` then reboot |
+| After a reboot: SELinux shows Enforcing and zram is gone (fix didn't run) | Magisk's boot post-fs-data stage crashed — usually right after installing a new module | **Boot Magisk safe mode**: hold **Volume-Up** through the whole boot → open Magisk app → uninstall the module you added last → reboot normally → re-run Phase 10 if fix.sh is missing |
 | `adb root` says "disabled by system setting" | Root debugging toggle flipped off | Settings → Developer options → re-enable Root debugging |
 | Instagram/Facebook video silent | Decoder not engaged | Check Phase 11's xaac string test; ensure you flashed the release's system image |
 | Facebook Lite video plays but has no sound | HeroPlayer picks the plain AAC decoder by mime and never falls back; the stock Oreo decoder can't decode xHE-AAC | **Fixed in v7.1+** (the xHE decoder replaces the plain-AAC slot). On v7.0: update to v7.1 |
