@@ -28,7 +28,7 @@ a factory reset costs you ~2 minutes of re-setup, not a re-flash.
 |---|---|
 | **Debloat** | 30+ apps removed (gallery, email, browser, recorder, themes, debug tools, foreign-device overlays…) — curated, Contacts UI removed while keeping the Contacts **provider** |
 | **GMS** | BiTGApps Core: Google Play Store + GMS core only. No extra Google apps |
-| **xHE-AAC audio** | Full xHE-AAC decoder **built from source** (AOSP libxaac, armv7 NEON) and grafted into the VNDK-27 OMX registry — Instagram/Facebook modern-audio streams decode correctly (the stock decoder crashes on Meta's xHE-AAC + mid-stream config changes) |
+| **xHE-AAC audio** | Full xHE-AAC decoder **built from source** (AOSP libxaac, armv7 NEON) grafted into the VNDK-27 OMX registry, **and** (v7.1+) placed in the plain-AAC slot — the stock decoder crashes on Meta's xHE-AAC and players that pick the AAC decoder by name (e.g. Facebook Lite) get silent video |
 | **Vendor fixes** | 8 linker stubs added to /vendor — kills the 6 boot-time CANNOT-LINK crash-loops (ktv/soter/fingerprint/face) on this GSI |
 | **VNDK trim** | Unused VNDK 26/28 variants removed (~360 MB) — vendor needs only 27 + sp |
 | **Boot behavior** | SELinux permissive + 1.5 GB zram swap applied every boot via a 2-line Magisk post-fs-data script |
