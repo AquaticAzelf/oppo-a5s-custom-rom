@@ -1,0 +1,26 @@
+# build artifacts & large binaries (distributed via GitHub Releases, not git)
+*.img
+*.img.xz
+*.7z
+*.bin
+build/
+work/
+out/
+
+# local project trees (not part of the published project)
+a11-project/
+CLOUD_BACKUP/
+wsl-*
+backup-sdcard/
+tmp/
+analysis/
+
+# credentials & local state — NEVER commit
+*token*
+*Token*
+opencode.json
+.env
+
+# OS / editor noise
+Thumbs.db
+.DS_Store

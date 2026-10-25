@@ -1,0 +1,5 @@
+# SHA256SUMS — verify every file before flashing
+c233504f45c69410bbbd3d9a0de5b4b53b348b09ae9126bcf7ec3fe4d352e309 *los-custom-v7.7z
+16d76138bcb7adfac95a850a41dbb125e9673168e5cd68cc315c8ca628b40b32 *los-custom-v7.img
+3508b60550a7fe05b51cd783b13b29115cb5cea0d99b9c1ff2b186767854e44b *vendor-custom.img
+37fdd90e59e805012704688a6c21efddc7717f32d798afe82d1655f4e7460446 *boot-magisk.img
