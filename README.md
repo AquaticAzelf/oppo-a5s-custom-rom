@@ -1,8 +1,20 @@
 # OPPO A5s Custom ROM — LineageOS 17.1, rebuilt
 
-A debloated, fix-forwarded **LineageOS 17.1 (Android 10)** build for the
-**OPPO A5s (CPH1909 / MT6765 / Helio P35)** — designed as a **zero-module**
-ROM: everything important is baked into the system and vendor partitions, so
+A debloated, fix-forwarded **LineageOS 17.1 (Android 10)** custom ROM **download**
+for the **OPPO A5s (CPH1909)** — also sold as the **OPPO AX5s** — powered by the
+MediaTek **MT6765 (Helio P35)**. If you are looking for a stable custom ROM or
+GSI replacement for ColorOS on the OPPO A5s / AX5s, this is a complete,
+ready-to-flash build with a step-by-step guide. The system image, vendor image,
+and Magisk boot image are all in the [Releases](https://github.com/AquaticAzelf/oppo-a5s-custom-rom/releases).
+
+**Supported device**
+
+| Model | Aliases | Chipset |
+|---|---|---|
+| OPPO A5s | AX5s, CPH1909, oppo6765_18511 | MediaTek MT6765 / Helio P35, PowerVR GE8320 |
+
+The ROM is designed as a **zero-module**
+build: everything important is baked into the system and vendor partitions, so
 a factory reset costs you ~2 minutes of re-setup, not a re-flash.
 
 > **Read [NOTICE.md](NOTICE.md) before using.** Flashing third-party firmware

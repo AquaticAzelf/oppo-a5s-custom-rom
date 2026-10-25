@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OPPO A5s Custom ROM — LineageOS 17.1 Download (CPH1909 / AX5s)</title>
+<meta name="description" content="Free custom ROM download for the OPPO A5s (CPH1909, also sold as AX5s, MediaTek Helio P35): a debloated LineageOS 17.1 (Android 10) build with fixed xHE-AAC audio, repaired vendor services, Magisk root, and a complete step-by-step flashing guide.">
+<meta property="og:title" content="OPPO A5s Custom ROM — LineageOS 17.1">
+<meta property="og:description" content="Debloated LineageOS 17.1 (Android 10) for OPPO A5s / AX5s (CPH1909). xHE-AAC audio fixed, vendor crash-loops fixed, zero modules. Free download + full flash guide.">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://aquaticazelf.github.io/oppo-a5s-custom-rom/">
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: system-ui, sans-serif; background:#0d1117; color:#e6edf3; margin:0; line-height:1.6; }
+  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+  a { color:#58a6ff; }
+  .badge { display:inline-block; background:#1f6feb22; border:1px solid #1f6feb55; color:#58a6ff; border-radius:999px; padding:.15rem .8rem; font-size:.85rem; margin:.2rem .2rem .2rem 0; }
+  h1 { font-size: 2rem; line-height:1.2; }
+  h2 { border-top:1px solid #21262d; padding-top:1.5rem; margin-top:2rem; }
+  .cta { display:inline-block; background:#238636; color:#fff; padding:.7rem 1.3rem; border-radius:8px; text-decoration:none; font-weight:600; margin:.4rem .5rem .4rem 0; }
+  .cta.secondary { background:#21262d; }
+  table { border-collapse: collapse; width:100%; }
+  td, th { border:1px solid #30363d; padding:.5rem .7rem; text-align:left; }
+  code { background:#161b22; padding:.1rem .35rem; border-radius:5px; }
+  .muted { color:#8b949e; }
+</style>
+</head>
+<body>
+<main>
+  <h1>OPPO A5s Custom ROM — LineageOS 17.1 (Android 10)</h1>
+  <p>
+    <span class="badge">LineageOS 17.1</span><span class="badge">Android 10</span>
+    <span class="badge">CPH1909 / AX5s</span><span class="badge">Helio P35 (MT6765)</span>
+    <span class="badge">Magisk root</span><span class="badge">Zero modules</span>
+  </p>
+  <p>A <strong>free, debloated LineageOS 17.1 custom ROM</strong> for the OPPO A5s
+  (model CPH1909, also sold as <strong>OPPO AX5s</strong>), replacing ColorOS with a
+  clean Android 10 build. Everything important is baked into the system image —
+  a factory reset costs you about two minutes of re-setup, not a re-flash.</p>
+
+  <p>
+    <a class="cta" href="https://github.com/AquaticAzelf/oppo-a5s-custom-rom/releases">⬇ Download the ROM</a>
+    <a class="cta secondary" href="https://github.com/AquaticAzelf/oppo-a5s-custom-rom/blob/main/docs/FLASH-GUIDE.md">📖 Flash guide</a>
+    <a class="cta secondary" href="https://github.com/AquaticAzelf/oppo-a5s-custom-rom">GitHub repository</a>
+  </p>
+
+  <h2>What this custom ROM fixes on the OPPO A5s</h2>
+  <ul>
+    <li><strong>Instagram &amp; Facebook audio</strong> — a full xHE-AAC decoder compiled
+        from AOSP libxaac is grafted into the media stack; Meta's modern audio
+        streams decode correctly (stock firmware-era decoders crash on them).</li>
+    <li><strong>Vendor crash-loops</strong> — 8 linker stubs repair the boot-time
+        CANNOT-LINK failures of the fingerprint/face/soter services on GSIs.</li>
+    <li><strong>Bloat removed</strong> — 30+ apps stripped; Google Play + services only;
+        the Contacts provider stays, the UI goes.</li>
+    <li><strong>Battery &amp; memory</strong> — 1.5 GB zram swap and GMS battery
+        optimization applied every boot; VNDK trimmed by ~360 MB.</li>
+    <li><strong>Magisk root</strong> — patched boot image included; no modules required.</li>
+  </ul>
+
+  <h2>Device compatibility</h2>
+  <table>
+    <tr><th>Model</th><th>Aliases</th><th>Chipset</th></tr>
+    <tr><td>OPPO A5s</td><td>AX5s, CPH1909, oppo6765_18511</td><td>MediaTek MT6765 / Helio P35, PowerVR GE8320</td></tr>
+  </table>
+
+  <h2>Requirements</h2>
+  <p>An <strong>unlocked bootloader</strong>, a Windows PC, and about an hour.
+  The flashing uses MediaTek BROM mode via mtkclient — no fastboot needed.
+  The <a href="https://github.com/AquaticAzelf/oppo-a5s-custom-rom/blob/main/docs/FLASH-GUIDE.md">
+  complete guide</a> covers backups, flashing, TWRP, setup, and troubleshooting.</p>
+
+  <h2>Known limits (honesty section)</h2>
+  <p class="muted">Fingerprint and face unlock are dead on this generation of GSIs
+  (vendor trustlet); the OS UI battery-temperature reading is a MediaTek naming
+  quirk; no Vulkan driver exists for this SoC. Everything else a daily driver
+  needs works.</p>
+
+  <p class="muted">Not affiliated with OPPO, Google, MediaTek or LineageOS. No warranty —
+  see the repository's NOTICE.md. ROM download is free, Apache-2.0 licensed.</p>
+</main>
+</body>
+</html>
