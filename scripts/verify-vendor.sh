@@ -1,7 +1,10 @@
 #!/bin/sh
+
+# Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
+ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 # vendor-custom.img verification
 set -u
-IMG=/mnt/c/Users/Azelf/Documents/zcode/build/vendor-custom.img
+IMG=$ROOT/build/vendor-custom.img
 mkdir -p /mnt/vv
 mount -o ro,loop "$IMG" /mnt/vv || { echo "MOUNT FAILED"; exit 1; }
 cd /mnt/vv || exit 1

@@ -15,15 +15,29 @@ binaries from your own device (Phase 0 backups of the flash guide).
 | WSL2 (Alpine) + e2fsprogs | image surgery: sparse → ext4 → mount → modify → fsck |
 | Your device's own `vendor` backup | from the flash guide's Phase 0 (`mtk.py r vendor`) |
 
+## Where the scripts expect things
+
+Every script resolves the repo root automatically from its own location, so a
+plain `git clone` works with no editing. If you keep the working tree somewhere
+else, set `PROJECT_ROOT`:
+
+```sh
+export PROJECT_ROOT=/path/to/oppo-a5s-custom-rom
+```
+
+Intermediate trees (`work/`, `build/`, `analysis/`, `xaac-project/`) are
+created under that root and are git-ignored.
+
 ## Pipeline overview
 
 ```
-GSI .img.xz ──unsparse.py──▶ raw ext4 ──resize2fs 3G──▶ mount
+GSI .img.xz ──unsparse.py──▶ raw ext4 ──resize2fs──▶ mount
    │
    ├─ scripts/stage-bitg.py      (stage BiTGApps Core into product/, curated)
    ├─ scripts/build-image.sh     (the recipe — see below)
+   ├─ scripts/build-opt-system.sh (v8.0: bake the performance props)
    ├─ e2fsck -f                  (filesystem must be clean)
-   └─ repack / copy              → los-custom-v7.img  (+ sha256)
+   └─ repack / copy              → los-custom-v8.0.img  (+ sha256)
 ```
 
 ## What build-image.sh does, in order
@@ -44,6 +58,30 @@ GSI .img.xz ──unsparse.py──▶ raw ext4 ──resize2fs 3G──▶ moun
 8. Adds GlobalSign certs + the 8 vendor-glue interface libs from the stock
    system tree (ktv/soter/fingerprint/face service stubs).
 9. `e2fsck -f` → export → sha256.
+
+## The v8.0 performance props
+
+`scripts/build-opt-system.sh` runs **after** `build-image.sh` and edits two
+files inside the mounted image:
+
+| File | Property | Value |
+|---|---|---|
+| `build.prop` | `ro.surface_flinger.max_frame_buffer_acquired_buffers` | `3` |
+| `build.prop` | `ro.lmk.kill_timeout_ms` | `1000` |
+| `build.prop` | `debug.sf.nobootanimation` | `1` |
+| `etc/prop.default` | `ro.iorapd.enable` | `false` |
+
+The script verifies each value **inside the mounted image** before unmounting
+and fails the build if any of them did not apply. It also asserts the file size
+is unchanged and runs `e2fsck -fn`.
+
+`ro.iorapd.enable=false` is deliberate — see [PERFORMANCE.md](PERFORMANCE.md)
+§3.4. Enabling it crash-loops the daemon every 5 seconds on this kernel.
+
+> A raw `grep` of the finished image **cannot** verify a property change:
+> deleted ext4 blocks still hold stale copies of the old value. Read the live
+> file instead — `scripts/read-ext4-file.py` does this without needing
+> e2fsprogs.
 
 ## The xHE-AAC decoder build
 

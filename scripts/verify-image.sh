@@ -1,7 +1,10 @@
 #!/bin/sh
+
+# Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
+ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 # Independent verification of los-custom.img by read-only loop mount.
 set -u
-C=/mnt/c/Users/Azelf/Documents/zcode
+C=$ROOT
 IMG=/root/verify.img
 MNT=/mnt/verify
 fail=0

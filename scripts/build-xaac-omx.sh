@@ -1,7 +1,10 @@
 #!/bin/bash
+
+# Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
+ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 # Build OMX-flavor xHE-AAC decoder (32-bit) + patched registry + vendor XML overlay
 set -eu
-P=/c/Users/Azelf/Documents/zcode/xaac-project
+P=$ROOT/xaac-project
 TC="$P/ndk/android-ndk-r27b/toolchains/llvm/prebuilt/windows-x86_64/bin"
 CC="$TC/clang.exe --target=armv7a-linux-androideabi29"
 CXX="$TC/clang++.exe --target=armv7a-linux-androideabi29"
@@ -11,7 +14,7 @@ FAV="$P/frameworks_av"
 FN="$P/frameworks_native"
 SC="$P/system_core"
 XAAC="$P/libxaac"
-TREES=/c/Users/Azelf/Documents/zcode/work/trees
+TREES=$ROOT/work/trees
 V27="$TREES/los/lib/vndk-27"
 LIB32="$TREES/los/lib"
 OUT="$P/out2"
@@ -91,7 +94,9 @@ echo "  component: $(stat -c %s "$OUT/libstagefright_soft_xaacdec.so") bytes"
 
 echo "== [3/5] patch OMX registry (vndk-27, 32-bit) =="
 "$PY" - "$V27/libstagefright_omx.so" "$OUT/libstagefright_omx.so" <<'EOF'
-data = bytearray(open(r"C:/Users/Azelf/Documents/zcode/work/trees/los/lib/vndk-27/libstagefright_omx.so", "rb").read())
+import sys
+src, dst = sys.argv[1], sys.argv[2]
+data = bytearray(open(src, "rb").read())
 def swap(old, new, expect=None):
     n = data.count(old)
     assert n == 1, f"{old!r}: count {n} != 1"
@@ -102,9 +107,9 @@ def swap(old, new, expect=None):
 swap(b"OMX.google.flac.encoder", b"OMX.google.xaac.decoder")
 swap(b"audio_encoder.flac\x00", b"audio_decoder.aac\x00")
 swap(b"flacenc", b"xaacdec")
-open(r"C:/Users/Azelf/Documents/zcode/xaac-project/out2/libstagefright_omx.so", "wb").write(bytes(data))
+open(dst, "wb").write(bytes(data))
 print("  registry patched")
 EOF
 
-C:/Python314/python.exe C:/Users/Azelf/Documents/zcode/scripts/xaac-package.py
+"$PY" "$ROOT/scripts/xaac-package.py"
 echo "ALL DONE"

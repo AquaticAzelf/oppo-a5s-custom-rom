@@ -1,8 +1,11 @@
 #!/bin/sh
+
+# Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
+ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 # Build los-custom.img (LineageOS 17.1 + BiTGApps Core + owner app set + fixes)
 # Runs inside Alpine WSL2 as root. Image is modified on WSL-native fs (fast, safe).
 set -eu
-C=/mnt/c/Users/Azelf/Documents/zcode
+C=$ROOT
 WORK=/root/build
 MNT=/mnt/build
 

@@ -1,8 +1,11 @@
 #!/bin/sh
+
+# Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
+ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 # Build vendor-custom.img: stock OPPO vendor + additive codec/glue files.
 # Purely additive: 6 x 64-bit stubs, 2 x 32-bit stubs, 1 x xml. Nothing removed.
 set -eu
-C=/mnt/c/Users/Azelf/Documents/zcode
+C=$ROOT
 WORK=/root/vbuild
 MNT=/mnt/vendor
 S64=$C/work/trees/stock_system/lib64

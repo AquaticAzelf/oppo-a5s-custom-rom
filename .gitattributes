@@ -1,0 +1,9 @@
+# Shell and Python must keep LF endings or they fail on Linux/WSL
+# ("bad interpreter: /bin/sh^M"). Windows batch files must keep CRLF.
+* text=auto eol=lf
+
+*.sh   text eol=lf
+*.py   text eol=lf
+*.md   text eol=lf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf

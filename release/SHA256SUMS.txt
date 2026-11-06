@@ -1,5 +1,24 @@
 # SHA256SUMS — verify every file before flashing
-c233504f45c69410bbbd3d9a0de5b4b53b348b09ae9126bcf7ec3fe4d352e309 *los-custom-v7.7z
-16d76138bcb7adfac95a850a41dbb125e9673168e5cd68cc315c8ca628b40b32 *los-custom-v7.img
+#
+# Windows:   certutil -hashfile <file> SHA256
+# Linux/mac: sha256sum -c SHA256SUMS.txt
+#
+# The archive hash verifies your DOWNLOAD. The .img hash verifies the file
+# after extraction. Check both if you extract.
+
+## v8.0 (2026-11-06) — current
+
+# download this, then extract:
+b3a15c91c35049baf98c6ce4826f8eefc4e609efce76e5f7b10523ed3bc613db *los-custom-v8.0.img.gz
+
+# hash of the file AFTER extraction (1,900,544,000 bytes):
+2ca8d883d77b56e6ba71122a549fdc39b2359d88912e09e03bca0cd386b96097 *los-custom-v8.0.img
+
+# vendor and boot are unchanged since v7.1 and are shared by both releases:
 3508b60550a7fe05b51cd783b13b29115cb5cea0d99b9c1ff2b186767854e44b *vendor-custom.img
 37fdd90e59e805012704688a6c21efddc7717f32d798afe82d1655f4e7460446 *boot-magisk.img
+
+## v7.1 (2026-10-26) — previous, still valid
+
+c233504f45c69410bbbd3d9a0de5b4b53b348b09ae9126bcf7ec3fe4d352e309 *los-custom-v7.7z
+16d76138bcb7adfac95a850a41dbb125e9673168e5cd68cc315c8ca628b40b32 *los-custom-v7.img

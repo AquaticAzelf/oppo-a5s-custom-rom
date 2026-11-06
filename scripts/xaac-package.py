@@ -1,11 +1,14 @@
 """Generate clean-insert vendor xml overlay + package final module zip."""
 import os
 import zipfile
+ROOT = os.environ.get("PROJECT_ROOT")
+if not ROOT:
+    ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-OUT = r"C:/Users/Azelf/Documents/zcode/xaac-project/out2"
+OUT = os.path.join(ROOT, "xaac-project/out2")
 
 # [4/5] xml overlay: insert xaac decoder entry after aac.decoder (clean limits)
-src = r"C:/Users/Azelf/Documents/zcode/work/trees/stock_vendor/etc/media_codecs_google_audio.xml"
+src = os.path.join(ROOT, "work/trees/stock_vendor/etc/media_codecs_google_audio.xml")
 xml = open(src, encoding="utf-8").read()
 entry = (
     '        <MediaCodec name="OMX.google.xaac.decoder" type="audio/mp4a-latm">\n'

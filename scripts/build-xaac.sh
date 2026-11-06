@@ -1,8 +1,11 @@
 #!/bin/sh
+
+# Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
+ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 # Build xHE-AAC (c2.android.xaac.decoder) for LineageOS 17.1 swcodec flattened apex.
 # Runs in Alpine WSL with Linux NDK r27b. Output: Magisk module zip on /mnt/c.
 set -eu
-C=/mnt/c/Users/Azelf/Documents/zcode
+C=$ROOT
 P=$C/xaac-project
 NDK=/root/android-ndk-r27b
 TC=$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin

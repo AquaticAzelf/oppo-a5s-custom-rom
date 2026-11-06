@@ -1,9 +1,12 @@
 """Map every file inside BiTGApps tarballs: path, type, mode, uid, links."""
 import os
 import tarfile
+ROOT = os.environ.get("PROJECT_ROOT")
+if not ROOT:
+    ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-BASE = r"C:/Users/Azelf/Documents/zcode/work/bitg"
-OUT = r"C:/Users/Azelf/Documents/zcode/analysis/bitg-map.txt"
+BASE = os.path.join(ROOT, "work/bitg")
+OUT = os.path.join(ROOT, "analysis/bitg-map.txt")
 
 lines = []
 for root, _dirs, files in os.walk(os.path.join(BASE, "tar")):
