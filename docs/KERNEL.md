@@ -151,3 +151,53 @@ That is a multi-session job with no guarantee of success.
 
 Do not spend time on clocks, PHY registers, OVL config or the device tree.
 Those are byte-identical and have been tested repeatedly.
+
+---
+
+## Appendix — the `async_discard` patch, reconstructed
+
+The original patched tree lived in a WSL image that may no longer exist, so the
+change is reproduced here. It is three edits to `fs/ext4/super.c` on a 4.9
+kernel. The behaviour required is simply: **accept the token and ignore it.**
+
+**1. Add to the mount-option enum** (the `Opt_*` list near the top):
+
+```c
+	Opt_ignore, Opt_discard, Opt_nodiscard, Opt_async_discard,
+	Opt_init_itable, Opt_noinit_itable,
+```
+
+**2. Add to the `tokens[]` table**, next to `discard`:
+
+```c
+	{Opt_discard, "discard"},
+	{Opt_nodiscard, "nodiscard"},
+	{Opt_async_discard, "async_discard"},
+```
+
+**3. Add a case in `parse_options()`**:
+
+```c
+		case Opt_async_discard:
+			/* MTK extension used by the stock vendor fstab.
+			 * Semantics are irrelevant here: the only thing that
+			 * matters is that the token is recognised. An unknown
+			 * option makes parse_options() return -1, which makes
+			 * ext4_fill_super() fail and mount() return EINVAL. */
+			break;
+```
+
+Verify after building:
+
+```sh
+grep -n 'Opt_async_discard\|"async_discard"' fs/ext4/super.c
+```
+
+Four lines should match: the enum entry, the token-table entry, the case label,
+and the comment. If the enum and table entries are present but the `case` is
+missing, the compiler warns about an unhandled enumeration value — that is the
+usual sign of a half-applied patch.
+
+> The same class of failure will hit any other MTK-specific option the vendor
+> fstab uses. Diff `/vendor/etc/fstab.mt6765` against the option list your
+> kernel actually supports before flashing, not after.
