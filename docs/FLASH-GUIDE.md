@@ -67,27 +67,37 @@ Test it: `python mtk.py --help` should print usage.
 
 ## PHASE 2 — Download this ROM + verify
 
-1. From this repo's **Releases** page, download the files for the version you
-   want:
-   - `los-custom-v8.0.img` (or the `.7z` / `.gz` archive if one is published
-     for that release — the archive extracts to the same `.img`)
+1. From the **v8.0** release, download:
+   - `los-custom-v8.0.img.gz` — the system image
+   - `SHA256SUMS.txt`
+2. From the **v7.1** release, also download (these are unchanged in v8.0 and are
+   not duplicated into the newer release):
    - `vendor-custom.img`
    - `boot-magisk.img`
-   - `SHA256SUMS.txt`
-2. If you downloaded an archive, extract it. **Do not** rename the resulting
-   file — the flash commands below expect the name from `SHA256SUMS.txt`.
-3. Verify everything (PowerShell or cmd, in the download folder):
+3. Extract the system image. On Windows 11 either works:
 
 ```bat
+tar -xzf los-custom-v8.0.img.gz
+```
+
+   …or install [7-Zip](https://7-zip.org), right-click the `.gz` → **Extract
+   here**. You should end up with `los-custom-v8.0.img` at
+   **1,900,544,000 bytes**.
+4. Verify everything (PowerShell or cmd, in the download folder):
+
+```bat
+certutil -hashfile los-custom-v8.0.img.gz SHA256
 certutil -hashfile los-custom-v8.0.img SHA256
 certutil -hashfile vendor-custom.img SHA256
 certutil -hashfile boot-magisk.img SHA256
 ```
 
-Compare against `SHA256SUMS.txt`. **If any hash differs, do not flash.**
+Compare against `SHA256SUMS.txt`. The `.gz` hash checks your download; the
+`.img` hash checks the extracted file. **If any hash differs, do not flash.**
 
-> Sizes, so you know a download finished: system **1,900,544,000 bytes**,
-> vendor **1,107,296,256 bytes**, boot **11,407,360 bytes**.
+> Sizes, so you know a download finished: system **1,900,544,000 bytes**
+> (801 MB compressed), vendor **1,409,286,144 bytes**, boot **11,407,360
+> bytes**.
 
 ---
 
