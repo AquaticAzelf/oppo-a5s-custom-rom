@@ -101,6 +101,8 @@ The regression suite is `tests/test_repo_fixes.py`. Run `python -m unittest disc
 
 ## Documentation
 
+AI agents and new contributors: start with [AGENTS.md](AGENTS.md). It maps the build order, the hard rules, and where the release images live.
+
 | Doc | What's in it |
 |---|---|
 | **[docs/FLASH-GUIDE.md](docs/FLASH-GUIDE.md)** | Backups, mtkclient, BROM flashing, TWRP, Magisk, the boot fix, verification, troubleshooting. Start here |
