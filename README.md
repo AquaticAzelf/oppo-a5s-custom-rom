@@ -24,7 +24,7 @@ Images are in [Releases](https://github.com/AquaticAzelf/oppo-a5s-gsi-repack/rel
 | Vendor | v7.1, unchanged | 1,409,286,144 B | `3508b60550a7fe05` | v7.1 |
 | Boot | Magisk 30.7 patched | 11,407,360 B | `37fdd90e59e80501` | v7.1 |
 
-The v8.0 release ships the system image only. If you already have v7.1 installed, you only need the new system image. Full hashes and verification commands are in [release/SHA256SUMS.txt](release/SHA256SUMS.txt).
+The v8.0 release ships the system image only. Vendor and boot were not changed, so if you already have v7.1 installed, keep those partitions and flash only the new system image. Download vendor and boot from the [v7.1 release](https://github.com/AquaticAzelf/oppo-a5s-gsi-repack/releases/tag/v7.1) only if you are coming from stock or v7.0. Full hashes and verification commands are in [release/SHA256SUMS.txt](release/SHA256SUMS.txt).
 
 Verify before flashing. A truncated download is the most common cause of a reported bootloop. The images are release assets, not git files, so a clone alone will not give you anything to flash.
 
