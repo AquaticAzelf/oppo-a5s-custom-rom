@@ -223,6 +223,8 @@ cd /
 umount "$MNT"
 e2fsck -fn "$WORK/los-custom.img" > /tmp/fsck.log 2>&1 || true
 tail -3 /tmp/fsck.log
+# Keeps the v7 base name deliberately. build-opt-system.sh turns this into the
+# v8.0 release image; pass that final path to verify-image.sh, not this one.
 FINAL="$C/build/los-custom-v7.img"
 cp "$WORK/los-custom.img" "$FINAL"
 rm -f "$WORK/los-custom.img"
