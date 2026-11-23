@@ -2,6 +2,8 @@
 *.img
 *.img.xz
 *.7z
+*.gz
+*.zip
 *.bin
 build/
 work/

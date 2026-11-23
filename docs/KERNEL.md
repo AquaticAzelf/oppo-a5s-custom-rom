@@ -193,8 +193,9 @@ Verify after building:
 grep -n 'Opt_async_discard\|"async_discard"' fs/ext4/super.c
 ```
 
-Four lines should match: the enum entry, the token-table entry, the case label,
-and the comment. If the enum and table entries are present but the `case` is
+Three lines should match: the enum entry, the token-table entry, and the case
+label (the comment does not contain the literal token). If the enum and table
+entries are present but the `case` is
 missing, the compiler warns about an unhandled enumeration value — that is the
 usual sign of a half-applied patch.
 

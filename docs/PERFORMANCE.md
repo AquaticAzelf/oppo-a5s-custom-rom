@@ -35,8 +35,11 @@ Three things were actively wrong: **CFQ on eMMC**, **`dirty_ratio=20`**, and
 
 ## 2. Tier A — runtime, free, reversible
 
-Applied at boot by a Magisk `post-fs-data` script. Nothing here needs a
-rebuild or a flash.
+Applied at boot by `scripts/perf-tune.sh`, deployed as
+`/data/adb/post-fs-data.d/20-perf.sh` by `scripts/install-fix.bat` (see the
+flash guide, Phase 10). Nothing here needs a rebuild or a flash. If you only
+installed `fix.sh`, you have the permissive-SELinux and zram fixes but not
+these tunings — run the installer to add them.
 
 > **Measured honestly:** these did **not** improve app launch time. `am start -W`
 > on Settings went 297 ms → 308 ms median — that is noise. On an idle device

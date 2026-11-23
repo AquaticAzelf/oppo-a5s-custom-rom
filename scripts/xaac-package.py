@@ -38,7 +38,8 @@ service = (
     "  sleep 2\n"
     "  setprop ctl.restart mediacodec ) &\n"
 )
-z = os.path.join(OUT, "xhe_aac_codec_v7.zip")
+# Keep the filename in sync with module.prop version=v6 below.
+z = os.path.join(OUT, "xhe_aac_codec_v6.zip")
 with zipfile.ZipFile(z, "w", zipfile.ZIP_DEFLATED) as zf:
     zf.writestr("module.prop",
                 "id=xhe_aac_codec\nname=xHE-AAC Decoder (Instagram audio)\n"

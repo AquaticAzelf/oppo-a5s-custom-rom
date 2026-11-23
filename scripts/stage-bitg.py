@@ -1,7 +1,4 @@
 """Stage BiTGApps Core payload into the final image-relative layout.
-ROOT = os.environ.get("PROJECT_ROOT")
-if not ROOT:/n    ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 Destination map mirrors the working v222 GMS reference image
 (product placement) + AOSP standard paths for etc/ files.
@@ -10,6 +7,10 @@ Staged tree root == future image root.
 import os
 import shutil
 import tarfile
+
+ROOT = os.environ.get("PROJECT_ROOT")
+if not ROOT:
+    ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BASE = os.path.join(ROOT, "work/bitg/tar")
 STAGE = os.path.join(ROOT, "build/staged")

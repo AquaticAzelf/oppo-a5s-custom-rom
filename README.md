@@ -1,11 +1,15 @@
-# OPPO A5s Custom ROM — LineageOS 17.1, rebuilt
+# OPPO A5s GSI repack — LineageOS 17.1 with fixes
 
-A debloated, fix-forwarded **LineageOS 17.1 (Android 10)** build for the
+> Honest naming: this is a **LineageOS 17.1 GSI with fixes baked in and build/
+> flash scripts**, not a ROM compiled from source. The previous repository name
+> claimed more than the project actually is; this rename matches what it does.
+
+A debloated, fix-forwarded **LineageOS 17.1 (Android 10)** GSI repack for the
 **OPPO A5s (CPH1909)** — also sold as the **OPPO AX5s** — on the MediaTek
 **MT6765 (Helio P35)**. GSI-based, Magisk-rooted, zero Magisk modules, and
 everything that matters baked into the system and vendor partitions.
 
-Images are in [Releases](https://github.com/AquaticAzelf/oppo-a5s-custom-rom/releases).
+Images are in [Releases](https://github.com/AquaticAzelf/oppo-a5s-gsi-repack/releases).
 
 **Supported device**
 

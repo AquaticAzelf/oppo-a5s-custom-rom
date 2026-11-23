@@ -8,13 +8,13 @@
 #   MTKCLIENT=/path/to/mtkclient    where mtk.py lives (default: .)
 #   MTK_PYTHON=python3              interpreter to use
 #
-# Guards, in order:
-#   1. a .sha256 sidecar must exist and match  — never flash an unverified file
-#   2. a size sanity check                    — a boot image is ~11 MB, a
-#      system image is ~1.8 GB; passing the wrong file to the wrong partition
-#      is how phones become unbootable
-#   3. the partition must be on the allow-list — preloader, nvram, nvdata,
+# Guards, in order (must match the section order below):
+#   1. the partition must be on the allow-list — preloader, nvram, nvdata,
 #      seccfg, lk, tee and friends are never writable by this script
+#   2. a checksum sidecar must exist and match — never flash an unverified file
+#   3. a size sanity check                    — a boot image is ~11 MB, a
+#      system image is ~1.9 GB; passing the wrong file to the wrong partition
+#      is how phones become unbootable
 #
 # It writes exactly one partition and then exits. One partition per BROM
 # session is deliberate: a failure mid-session cannot cascade.

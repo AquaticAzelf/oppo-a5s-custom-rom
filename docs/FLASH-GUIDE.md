@@ -195,12 +195,14 @@ Unplug.
 
 ## PHASE 10 — The boot fix (the one external piece)
 
-This 2-line script gives you **SELinux permissive + 1.5 GB zram swap on every
-boot** via Magisk's post-fs-data stage. Without it the ROM boots Enforcing
-with no swap.
+Two scripts give you **SELinux permissive + 1.5 GB zram swap** (`fix.sh`) and
+the Tier-A runtime tunings from `docs/PERFORMANCE.md` (`perf-tune.sh`) on every
+boot via Magisk's post-fs-data stage. Without them the ROM boots Enforcing,
+with no swap and with stock I/O/VM settings. The installer deploys both.
 
 **Easy way:** double-click `scripts\install-fix.bat` (from this repo) with the
-phone plugged in and Root debugging on.
+phone plugged in and Root debugging on. Keep `fix.sh` and `perf-tune.sh` next
+to it — the batch file pushes both.
 
 **Manual way:**
 
@@ -208,10 +210,13 @@ phone plugged in and Root debugging on.
 adb root
 adb shell "mkdir -p /data/adb/post-fs-data.d"
 adb push fix.sh /data/adb/post-fs-data.d/fix.sh
-adb shell "chmod 755 /data/adb/post-fs-data.d/fix.sh && restorecon /data/adb/post-fs-data.d/fix.sh"
+adb push perf-tune.sh /data/adb/post-fs-data.d/20-perf.sh
+adb shell "chmod 755 /data/adb/post-fs-data.d/fix.sh /data/adb/post-fs-data.d/20-perf.sh"
+adb shell "restorecon /data/adb/post-fs-data.d/fix.sh /data/adb/post-fs-data.d/20-perf.sh"
 ```
 
-Then **reboot**.
+Then **reboot**. `perf-tune.sh` logs what it applied to
+`/data/local/tmp/perf-tune.log`; a missing sysfs node is skipped, not an error.
 
 > If after reboot things still aren't right, see Troubleshooting below —
 > there's a label check that fixes a rare Magisk quirk.

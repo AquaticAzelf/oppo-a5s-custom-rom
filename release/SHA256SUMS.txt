@@ -20,5 +20,6 @@ b3a15c91c35049baf98c6ce4826f8eefc4e609efce76e5f7b10523ed3bc613db *los-custom-v8.
 
 ## v7.1 (2026-10-26) — previous, still valid
 
-c233504f45c69410bbbd3d9a0de5b4b53b348b09ae9126bcf7ec3fe4d352e309 *los-custom-v7.7z
-16d76138bcb7adfac95a850a41dbb125e9673168e5cd68cc315c8ca628b40b32 *los-custom-v7.img
+# Names and hashes below match the files actually attached to the v7.1 release.
+c2bb0f0517444cc0f17db730070699f780b3121d83d7c3125e5a4cf1a2dd555e *los-custom-v7.1.7z
+67a04e6525c324033eca52a9322973058975dd3c42e16666d9b457f3dd950813 *los-custom-v7.1.img

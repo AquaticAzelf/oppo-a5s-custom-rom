@@ -9,6 +9,11 @@ C=$ROOT
 WORK=/root/build
 MNT=/mnt/build
 
+# Published size of the release system image (release/SHA256SUMS.txt). The
+# resize2fs target below only describes the *filesystem* target; what actually
+# ships is this many bytes. Fail loudly if a base-GSI change breaks that.
+EXPECTED_SYSTEM_SIZE="${EXPECTED_SYSTEM_SIZE:-1900544000}"
+
 label_of() { getfattr --absolute -n security.selinux --only-values "$1" 2>/dev/null || true; }
 first_match() { for f in $1; do [ -e "$f" ] && { echo "$f"; return 0; }; done; echo "REF-NOT-FOUND: $1" >&2; exit 1; }
 
@@ -209,7 +214,8 @@ for lib in vendor.oppo.hardware.biometrics.face@1.0.so            android.framew
   chown 0:0 "lib/$lib"; chmod 644 "lib/$lib"
   set_lbl "lib/$lib" "$LBL_LIB"
 done
-set_lbl phh/secure "$LBL_PHH"
+# Deliberately no phh/secure flag: it makes phh-securize force SELinux back to
+# Enforcing after our permissive rc. The su binaries are already removed above.
 
 echo "[7/7] unmount, fsck, export"
 sync
@@ -217,6 +223,13 @@ cd /
 umount "$MNT"
 e2fsck -fn "$WORK/los-custom.img" > /tmp/fsck.log 2>&1 || true
 tail -3 /tmp/fsck.log
-cp "$WORK/los-custom.img" "$C/build/los-custom-v7.img"
+FINAL="$C/build/los-custom-v7.img"
+cp "$WORK/los-custom.img" "$FINAL"
 rm -f "$WORK/los-custom.img"
-echo "BUILD DONE: $(stat -c %s "$C/build/los-custom-v7.img") bytes"
+FINAL_SIZE=$(stat -c %s "$FINAL")
+[ "$FINAL_SIZE" = "$EXPECTED_SYSTEM_SIZE" ] || {
+    echo "FATAL: exported image is $FINAL_SIZE bytes, expected $EXPECTED_SYSTEM_SIZE" >&2
+    echo "       Reconcile the resize2fs target with the published image size." >&2
+    exit 1
+}
+echo "BUILD DONE: $FINAL_SIZE bytes"

@@ -22,7 +22,7 @@ plain `git clone` works with no editing. If you keep the working tree somewhere
 else, set `PROJECT_ROOT`:
 
 ```sh
-export PROJECT_ROOT=/path/to/oppo-a5s-custom-rom
+export PROJECT_ROOT=/path/to/oppo-a5s-gsi-repack
 ```
 
 Intermediate trees (`work/`, `build/`, `analysis/`, `xaac-project/`) are
@@ -39,6 +39,22 @@ GSI .img.xz ──unsparse.py──▶ raw ext4 ──resize2fs──▶ mount
    ├─ e2fsck -f                  (filesystem must be clean)
    └─ repack / copy              → los-custom-v8.0.img  (+ sha256)
 ```
+
+## Image size and where the images live
+
+The published system image is **1,900,544,000 bytes** (see
+`release/SHA256SUMS.txt`). The `resize2fs ... 3G` line in `build-image.sh` is the
+*filesystem* target, not the shipped file size; the two had never been
+reconciled in the recipe. `build-image.sh` now enforces the published size with
+an `EXPECTED_SYSTEM_SIZE` gate and aborts if the exported image differs. If a
+future base GSI legitimately changes the size, update the gate and
+`release/SHA256SUMS.txt` together, deliberately.
+
+The large images are **not in git** (`.gitignore` excludes `*.img`, `*.7z`,
+`*.gz`, `*.zip`). They are attached to the
+[Releases](https://github.com/AquaticAzelf/oppo-a5s-gsi-repack/releases): v8.0
+carries the system image, v7.1 still carries the unchanged vendor and boot
+images. `scripts/verify-image.sh` checks the size and the live filesystem.
 
 ## What build-image.sh does, in order
 

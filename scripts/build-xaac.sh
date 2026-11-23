@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# LEGACY / experimental — NOT what ships in the release images.
+# This builds the Codec2 APEX (c2.android.xaac.decoder) variant as a Magisk
+# module. The shipped decoder is the OMX/vndk-27 build in build-xaac-omx.sh,
+# which is baked into system and vendor. Kept only as a reference for the
+# alternative approach; do not use it to reproduce a release.
+
 # Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
 ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 # Build xHE-AAC (c2.android.xaac.decoder) for LineageOS 17.1 swcodec flattened apex.

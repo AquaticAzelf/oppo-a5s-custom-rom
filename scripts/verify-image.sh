@@ -2,14 +2,27 @@
 
 # Repo root — override with PROJECT_ROOT if the tree lives elsewhere.
 ROOT="${PROJECT_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
-# Independent verification of los-custom.img by read-only loop mount.
+# Independent verification of the system image by read-only loop mount.
+# Usage:  sh verify-image.sh [image.img]
+# Needs root (loop mount + getfattr) inside Linux/WSL.
 set -u
 C=$ROOT
-IMG=/root/verify.img
-MNT=/mnt/verify
+IMG="${1:-$C/build/los-custom-v8.0.img}"
+MNT="${MNTDIR:-/tmp/verify-mount}"
 fail=0
 
-cp "$C/build/los-custom-v3.img" "$IMG" || exit 1
+# Published size from release/SHA256SUMS.txt. A truncated or wrong-base image
+# is the most common cause of a "bootloop" report — fail before mounting.
+EXPECTED_SYSTEM_SIZE="${EXPECTED_SYSTEM_SIZE:-1900544000}"
+
+[ -f "$IMG" ] || { echo "FAIL: $IMG not found"; exit 1; }
+ACTUAL_SIZE=$(stat -c %s "$IMG")
+[ "$ACTUAL_SIZE" = "$EXPECTED_SYSTEM_SIZE" ] || {
+    echo "FAIL: $IMG is $ACTUAL_SIZE bytes, expected $EXPECTED_SYSTEM_SIZE"
+    exit 1
+}
+echo "=== size OK: $ACTUAL_SIZE bytes ==="
+
 mkdir -p "$MNT"
 mount -o ro,loop "$IMG" "$MNT" || { echo "MOUNT FAILED"; exit 1; }
 cd "$MNT" || exit 1
@@ -43,7 +56,10 @@ abs product/priv-app/Camera2 product/priv-app/Gallery2 product/app/Jelly \
     product/app/PhotoTable bin/phh-su etc/init/su.rc
 
 echo "--- must EXIST (keeps + GMS + ports + fixes) ---"
-pres phh/secure product/priv-app/SystemUI/SystemUI.apk product/app/LatinIME \
+# NOTE: the phh "secure" flag is deliberately NOT expected here. build-image.sh
+# removes the phh-su binaries directly and does not create that flag, because
+# it makes phh-securize force SELinux back to Enforcing after our permissive rc.
+pres product/priv-app/SystemUI/SystemUI.apk product/app/LatinIME \
     product/app/Etar product/priv-app/Eleven product/app/messaging \
     priv-app/Seedvault product/priv-app/TrebuchetQuickStep \
     product/app/DeskClock product/app/webview app/Stk \
@@ -86,5 +102,4 @@ echo "(certs must be c41430e4... and fe356ea9...)"
 
 cd /
 umount "$MNT"
-rm -f "$IMG"
 if [ "$fail" = 0 ]; then echo "VERIFY RESULT: ALL-OK"; else echo "VERIFY RESULT: PROBLEMS FOUND"; fi
